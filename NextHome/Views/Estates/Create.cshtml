@@ -1,0 +1,78 @@
+﻿@model NextHome.Models.Estate
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Estate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfEstate" class="control-label"></label>
+                <input asp-for="TypeOfEstate" class="form-control" />
+                <span asp-validation-for="TypeOfEstate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfOwnership" class="control-label"></label>
+                <input asp-for="TypeOfOwnership" class="form-control" />
+                <span asp-validation-for="TypeOfOwnership" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NrOfRooms" class="control-label"></label>
+                <input asp-for="NrOfRooms" class="form-control" />
+                <span asp-validation-for="NrOfRooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ViewDate" class="control-label"></label>
+                <input asp-for="ViewDate" class="form-control" />
+                <span asp-validation-for="ViewDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealtorId" class="control-label"></label>
+                <input asp-for="RealtorId" class="form-control" />
+                <span asp-validation-for="RealtorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
