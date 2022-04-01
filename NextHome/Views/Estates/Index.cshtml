@@ -1,0 +1,110 @@
+﻿@model NextHome.Models.EstateFilter
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-controller="Estates" asp-action="Index" method="get">
+    <p>
+
+        <select asp-for="SelectedType" asp-items="Model.TypesOfEstates">
+            <option value="">All</option>
+        </select>
+
+        Adress: <input type="text" name="SearchString" />
+
+        Rooms: <input type="number" name="MinRooms" />
+
+        Size: <input type="number" name="MinSize" />
+
+        Price: <input type="number" name="MaxPrice" />
+
+        <input type="submit" value="Filter" />
+
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].TypeOfEstate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].TypeOfOwnership)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].NrOfRooms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].ViewDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estates[0].RealtorId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Estates) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfEstate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfOwnership)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NrOfRooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealtorId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
