@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<NextHomeContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NextHomeContext")));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<NextHomeContext>();
 
 // Add services to the container.
