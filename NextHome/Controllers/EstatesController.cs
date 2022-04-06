@@ -8,7 +8,7 @@ using NextHome.Models;
 
 namespace NextHome.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Realtor")]
     public class EstatesController : Controller
     {
         private readonly NextHomeContext _context;
