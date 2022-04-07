@@ -19,7 +19,6 @@ namespace NextHome.Controllers
         }
 
         // GET: Estates
-        [AllowAnonymous]
         public async Task<IActionResult> Index(string selectedType, string searchString, int minRooms, int minSize, int maxPrice = 2000000000)
         {
             IQueryable<string> filterQuery = from m in _context.Estate
@@ -52,7 +51,6 @@ namespace NextHome.Controllers
         }
 
         // GET: Estates/Details/5
-        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -92,7 +90,6 @@ namespace NextHome.Controllers
             return View(estate);
         }
 
-        // [Authorize]
         // GET: Estates/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
