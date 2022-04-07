@@ -23,9 +23,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Estates" asp-action="Index">Listings</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Customer View</a>
                         </li>
+
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Realtor"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Estates" asp-action="Index">Realtor View</a>
+                            </li>
+                        }
 
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
