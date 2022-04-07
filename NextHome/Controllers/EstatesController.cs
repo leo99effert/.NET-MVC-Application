@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NextHome.Data;
 using NextHome.Models;
+using System.Security.Claims;
 
 namespace NextHome.Controllers
 {
@@ -40,6 +41,9 @@ namespace NextHome.Controllers
             estates = estates.Where(x => x.NrOfRooms >= minRooms);
             estates = estates.Where(x => x.Size >= minSize);
             estates = estates.Where(x => x.Price <= maxPrice);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            estates = estates.Where(x => x.RealtorId == userId);
 
             var filteredEstates = new EstateFilter
             {
@@ -83,6 +87,8 @@ namespace NextHome.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                estate.RealtorId = userId;
                 _context.Add(estate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -111,7 +117,7 @@ namespace NextHome.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Address,Price,Description,TypeOfEstate,TypeOfOwnership,NrOfRooms,Size,Year,ViewDate")] Estate estate)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Address,Price,Description,TypeOfEstate,TypeOfOwnership,NrOfRooms,Size,Year,ViewDate,RealtorId")] Estate estate)
         {
             if (id != estate.Id)
             {
@@ -122,6 +128,8 @@ namespace NextHome.Controllers
             {
                 try
                 {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    estate.RealtorId = userId;
                     _context.Update(estate);
                     await _context.SaveChangesAsync();
                 }
