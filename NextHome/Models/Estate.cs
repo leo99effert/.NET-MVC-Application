@@ -39,6 +39,6 @@ namespace NextHome.Models
         [Display(Name = "Viewing Date")]
         [DataType(DataType.Date)]
         public DateTime ViewDate { get; set; }
-        public int RealtorId { get; set; }
+        public string? RealtorId { get; set; }
     }
 }
