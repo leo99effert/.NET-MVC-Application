@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using NextHome.Data;
 var builder = WebApplication.CreateBuilder(args);
 
+// for the google thing
+var config = builder.Configuration;
+
 builder.Services.AddDbContext<NextHomeContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NextHomeContext")));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -11,6 +14,16 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Google login
+builder.Services.AddAuthentication()
+   .AddGoogle(options =>
+   {
+       IConfigurationSection googleAuthNSection =
+       config.GetSection("Authentication:Google");
+       options.ClientId = googleAuthNSection["ClientId"];
+       options.ClientSecret = googleAuthNSection["ClientSecret"];
+   });
 
 var app = builder.Build();
 
