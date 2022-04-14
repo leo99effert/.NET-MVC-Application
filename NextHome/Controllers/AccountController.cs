@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NextHome.Models;
+using System.Security.Claims;
 
 namespace NextHome.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -17,12 +17,14 @@ namespace NextHome.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
@@ -47,6 +49,7 @@ namespace NextHome.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult ListRoles()
         {
@@ -54,6 +57,7 @@ namespace NextHome.Controllers
             return View(roles);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
@@ -81,6 +85,7 @@ namespace NextHome.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
@@ -111,6 +116,7 @@ namespace NextHome.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
@@ -147,6 +153,7 @@ namespace NextHome.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
@@ -187,6 +194,26 @@ namespace NextHome.Controllers
             }
 
             return RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+        // trying to make it possible for realtors to register without admin
+        [Authorize]
+        public async Task<IActionResult> BecomeRealtor()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await userManager.FindByIdAsync(userId);
+            var role = await roleManager.FindByNameAsync("Realtor");
+            if (await userManager.IsInRoleAsync(user, role.Name))
+            {
+                string message = "You are already a realtor";
+                return View((object)message);
+            }
+            else
+            {
+                await userManager.AddToRoleAsync(user, "Realtor");
+                string message = "You are now a realtor";
+                return View((object)message);
+            }
         }
     }
 }
